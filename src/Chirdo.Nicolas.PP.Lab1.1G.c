@@ -14,6 +14,7 @@
 
 #include "estructuras.h"
 #include "funciones.h"
+#include "input.h"
 
 #define TAM_MARCA 4
 #define TAM_TIPO 4
@@ -24,12 +25,13 @@
 int main(void) {
 	setbuf(stdout);
 
+	char opcion;
+
 	eMarca listaMarcas[TAM_MARCA];
 	eTipo listasTipos[TAM_TIPO];
 	eServicio listaServicios[TAM_SERV];
 	eNotebook listaNotebook[TAM_NOTE];
 
-	int opcion;
 
 	harcodearMarca(listaMarcas, TAM_MARCA);
 	harcodearTipos(listasTipos, TAM_TIPO);
@@ -37,7 +39,7 @@ int main(void) {
 	inicializarNotebook(eNotebook listaNotebook[], TAM_NOTE);
 
 	do{
-		opcion = mostrarManu;
+		opcion = mostrarMenu;
 		switch(opcion)){
 			case 'A':
 			break;
