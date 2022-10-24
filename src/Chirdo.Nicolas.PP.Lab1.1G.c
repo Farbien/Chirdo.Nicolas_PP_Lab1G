@@ -13,6 +13,8 @@
 #include <ctype.h>
 
 #include "estructuras.h"
+#include "marcas.h"
+#include "tipos.h"
 #include "funciones.h"
 #include "input.h"
 
@@ -23,7 +25,7 @@
 
 
 int main(void) {
-	setbuf(stdout);
+	setbuf(stdout,NULL);
 
 	char opcion;
 
@@ -33,30 +35,35 @@ int main(void) {
 	eNotebook listaNotebook[TAM_NOTE];
 
 
-	harcodearMarca(listaMarcas, TAM_MARCA);
-	harcodearTipos(listasTipos, TAM_TIPO);
-	harcodearServicios(listaServicios, TAM_SERV);
-	inicializarNotebook(eNotebook listaNotebook[], TAM_NOTE);
+	harcodearMarca(listaMarcas);
+	harcodearTipos(listasTipos);
+	harcodearServicios(listaServicios);
+	inicializarNotebook(listaNotebook, TAM_NOTE);
 
 	do{
-		opcion = mostrarMenu;
-		switch(opcion)){
+		opcion = mostrarMenu();
+		switch(opcion){
 			case 'A':
+				printf("\nALTA\n");
+				altaNotebook(listaNotebook, TAM_NOTE, listaMarcas, TAM_MARCA, listasTipos, TAM_TIPO);
 			break;
 			case 'B':
 			break;
 			case 'C':
 			break;
 			case 'D':
+				listarNotebook(listaNotebook, TAM_NOTE, listaMarcas, TAM_MARCA, listasTipos, TAM_TIPO);
 			break;
 			case 'E':
+				listarMarcas(listaMarcas, TAM_MARCA);
 			break;
 			case 'F':
+				listarTipos(listasTipos, TAM_TIPO);
 			break;
 			case 'H':
 			break;
 			case 'I':
-				printf("\nSaliendo del sistema...\n")
+				printf("\nSaliendo del sistema...\n");
 			break;
 			default:
 				printf("\n---ERROR: Opci%cn inv%clida\n",162,160);

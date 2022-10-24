@@ -74,7 +74,7 @@ void getChar(char texto[],int tam, char mensaje[]){
 
 	if(ok == 0)
 	{
-		printf("\nERROR, descripc%cn demasiado larga. Reingrese una mas corta: ",162);
+		printf("\nERROR, texto demasiado largo. Reingrese uno mas corto: ");
 		fflush(stdin);
 		scanf("%[^\n]", texto);
 	}

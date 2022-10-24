@@ -8,7 +8,7 @@
 #ifndef FUNCIONES_H_
 #define FUNCIONES_H_
 
-char mostrarManu(void);
+char mostrarMenu(void);
 
 
 #endif /* FUNCIONES_H_ */

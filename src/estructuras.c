@@ -3,6 +3,8 @@
 #include <string.h>
 
 #include "estructuras.h"
+#include "marcas.h"
+#include "tipos.h"
 #include "funciones.h"
 #include "input.h"
 
@@ -15,41 +17,15 @@ static int obtenerIdNotebook() {
 	return idNotebook++;
 }
 
-int harcodearMarca(eMarca array[], int tam){
-	int todoOk = 0;
-	eMarca marca[tam] = {{1000,"Compaq"},{1001,"Asus"},{1002."Acer"},{1003,"HP"}};
 
-	if(array != NULL && tam > 0){
-		for(int i=0; i<tam; i++){
-			array[i].id = marca[i].id;
-			strcpy(array[i].descripcion,marca[i].descripcion);
-		}
-		todoOk = 1;
-		}
-	return todoOk;
-}
 
-int harcodearTipos(eTipo array[], int tam){
-	int todoOk = 0;
-	eTipo tipo[tam] = {{1000,"Gamer"},{1001,"Disenio"},{1002."Ultrabook"},{1003,"Normalita"}};
-
-	if(array != NULL && tam > 0){
-		for(int i=0; i<tam; i++){
-			array[i].id = tipo[i].id;
-			strcpy(array[i].descripcion,tipo[i].descripcion);
-		}
-		todoOk = 1;
-		}
-	return todoOk;
-}
-
-int harcodearServicios(eServicio array[], int tam){
+int harcodearServicios(eServicio array[]){
 	int todoOk = 0;
 
-	eServicio servicio[tam] = {{20000,"Bateria",2250},{20001,"Display",10300},{20002."Teclado",4400},{20003,"Fuente",5600}};
+	eServicio servicio[4] = {{20000,"Bateria",2250},{20001,"Display",10300},{20002,"Teclado",4400},{20003,"Fuente",5600}};
 
-	if(array != NULL && tam > 0){
-		for(int i=0; i<tam; i++){
+	if(array != NULL){
+		for(int i=0; i<4; i++){
 			array[i].id = servicio[i].id;
 			strcpy(array[i].descripcion,servicio[i].descripcion);
 			array[i].precio = servicio[i].precio;
@@ -94,15 +70,54 @@ int buscarEspacioLibre(eNotebook array[], int tam) {
 
 	return rtn;
 }
-eNotebook cargarNotebook(eMarca arrayM[], int tamM, eTipo arrayT[], int tamT){
-	eNotebook aux;
+
+eNotebook cargarNotebook(int tam, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT){
+	eNotebook auxNotebook;
+	int auxInt;
+	int flag = 0;
+
+	getChar(auxNotebook.descripcion, tam, "Ingrese Nomcre de la Notebook");
+
+	do{
+		printf("\nIngrese ID de la Marca: ");
+		listarMarcas(arrayM, tamM);
+		fflush(stdin);
+		if(scanf("%d",&auxInt)){
+			for(int i = 0 ; i < tamM ; i++){
+				if(arrayM->id == auxInt){
+					flag = 1;
+					auxNotebook.idMarca = auxInt;
+				break;
+				}
+			}
+			}
+		else{
+			printf("\nEse ID de Marca es inv%clido\n",162);
+		}
+
+	}while(!flag);
 
 
+	do{
+		printf("\nIngrese ID del Tipo de Notebook: ");
+		listarTipos(arrayT, tamT);
+		fflush(stdin);
+		if(scanf("%d",&auxInt)){
+			for(int i = 0 ; i < tamT ; i++){
+				if(arrayT->id == auxInt){
+					flag = 1;
+					auxNotebook.idTipo = auxInt;
+				break;
+				}
+			}
+		}
+		else{
+			printf("\nEse ID de Tipo es inv%clido\n",162);
+		}
 
+	}while(!flag);
 
-
-
-
+	return auxNotebook;
 }
 
 int altaNotebook(eNotebook array[], int tam, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT) {
@@ -114,15 +129,71 @@ int altaNotebook(eNotebook array[], int tam, eMarca arrayM[], int tamM, eTipo ar
 		if (tam >= 0) {
 			indiceLibre = buscarEspacioLibre(array, tam);
 			if (indiceLibre >= 0) {
-				auxiliar = cargarNotebook(arrayM, tamM, arrayT, tamT);
+				auxiliar = cargarNotebook(tam, arrayM, tamM, arrayT, tamT);
 				auxiliar.id = obtenerIdNotebook();
 				auxiliar.isEmpty = OCUPADO;
 
 				array[indiceLibre] = auxiliar;
 				rtn = 0;
 			}
+			else{
+				printf("\nNo hay espacio libre\n");
+			}
+
 		}
+		else{
+			printf("Se ha superado el l%cmite de almacenamiento asignada",161);
+		}
+	}
+	else{
+		printf("o\nOcurri%co un error y no fue posible hacer el alta",161);
 	}
 
 	return rtn;
 }
+void listarUnaNotebook(eNotebook array, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT){
+	int marca;
+	int tipo;
+
+	for( int i = 0; i < tamM; i++){
+		if(array.idMarca == arrayM->id){
+			marca = i;
+			break;
+		}
+	}
+
+	for(int i = 0; i < tamT; i++){
+		if(array.idTipo == arrayT->id){
+			tipo = i;
+			break;
+		}
+	}
+
+	printf("%-4d | %-21s | %-21d | %-21d |",array.id,array.descripcion,arrayM->descripcion[marca],arrayT->descripcion[tipo]);
+}
+
+
+void listarNotebook(eNotebook array[], int tamN, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT){
+	if(array != NULL && tamN >= 0 && arrayM != NULL && tamM > 0 && arrayT != 0 && tamT > 0){
+			if(tamN > 0){
+				printf("\n=============================================================================");
+				printf("\n| \tLISTA NOTEBOOKS                                                         |\n");
+				printf("-------------------------------------------------------------------------------\n");
+				for(int i = 0;i < tamN; i++){
+						if(array->isEmpty == OCUPADO){
+						listarUnaNotebook(array[i], arrayM, tamM, arrayT, tamT);
+						printf("\n");
+						}
+					}
+					printf("=============================================================================\n");
+					}
+					else{
+						printf("\n No hay Notebooks a listar\n\n");
+				}
+
+		}
+
+
+
+}
+
