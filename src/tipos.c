@@ -10,7 +10,7 @@
 
 int harcodearTipos(eTipo array[]){
 	int todoOk = 0;
-	eTipo tipo[4] = {{1000,"Gamer"},{1001,"Disenio"},{1002,"Ultrabook"},{1003,"Normalita"}};
+	eTipo tipo[4] = {{5000,"Gamer"},{5001,"Disenio"},{5002,"Ultrabook"},{5003,"Normalita"}};
 
 	if(array != NULL){
 		for(int i=0; i<4; i++){

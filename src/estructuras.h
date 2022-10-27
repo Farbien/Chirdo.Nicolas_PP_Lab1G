@@ -45,7 +45,8 @@ int inicializarNotebook(eNotebook array[], int tam);
 int buscarEspacioLibre(eNotebook array[], int tam);
 eNotebook cargarNotebook(int tamN, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT);
 int altaNotebook(eNotebook array[], int tamN, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT);
-void listarUnaNotebook(eNotebook array, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT);
+int listarUnaNotebook(eNotebook array, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT);
 void listarNotebook(eNotebook array[], int tamN, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT);
+void bajaNotebook(eNotebook array[], int tamN, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT);
 
 #endif /* ESTRUCTURAS_H_ */

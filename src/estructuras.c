@@ -76,7 +76,7 @@ eNotebook cargarNotebook(int tam, eMarca arrayM[], int tamM, eTipo arrayT[], int
 	int auxInt;
 	int flag = 0;
 
-	getChar(auxNotebook.descripcion, tam, "Ingrese Nomcre de la Notebook");
+	getChar(auxNotebook.descripcion, tam, "Ingrese Nomcre de la Notebook: ");
 
 	do{
 		printf("\nIngrese ID de la Marca: ");
@@ -84,7 +84,7 @@ eNotebook cargarNotebook(int tam, eMarca arrayM[], int tamM, eTipo arrayT[], int
 		fflush(stdin);
 		if(scanf("%d",&auxInt)){
 			for(int i = 0 ; i < tamM ; i++){
-				if(arrayM->id == auxInt){
+				if(arrayM[i].id == auxInt){
 					flag = 1;
 					auxNotebook.idMarca = auxInt;
 				break;
@@ -104,7 +104,7 @@ eNotebook cargarNotebook(int tam, eMarca arrayM[], int tamM, eTipo arrayT[], int
 		fflush(stdin);
 		if(scanf("%d",&auxInt)){
 			for(int i = 0 ; i < tamT ; i++){
-				if(arrayT->id == auxInt){
+				if(arrayT[i].id == auxInt){
 					flag = 1;
 					auxNotebook.idTipo = auxInt;
 				break;
@@ -125,8 +125,9 @@ int altaNotebook(eNotebook array[], int tam, eMarca arrayM[], int tamM, eTipo ar
 	int indiceLibre;
 	eNotebook auxiliar;
 
-	if (array != NULL) {
+	if (array != NULL && arrayM != NULL && tamM > 0 && arrayT != 0 && tamT > 0){
 		if (tam >= 0) {
+			printf("\nALTA NOTEBOOK\n");
 			indiceLibre = buscarEspacioLibre(array, tam);
 			if (indiceLibre >= 0) {
 				auxiliar = cargarNotebook(tam, arrayM, tamM, arrayT, tamT);
@@ -151,49 +152,94 @@ int altaNotebook(eNotebook array[], int tam, eMarca arrayM[], int tamM, eTipo ar
 
 	return rtn;
 }
-void listarUnaNotebook(eNotebook array, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT){
+int listarUnaNotebook(eNotebook array, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT){
+	int flag = 0;
 	int marca;
 	int tipo;
 
 	for( int i = 0; i < tamM; i++){
-		if(array.idMarca == arrayM->id){
+		if(array.idMarca == arrayM[i].id){
 			marca = i;
 			break;
 		}
 	}
 
 	for(int i = 0; i < tamT; i++){
-		if(array.idTipo == arrayT->id){
+		if(array.idTipo == arrayT[i].id){
 			tipo = i;
 			break;
 		}
 	}
 
-	printf("%-4d | %-21s | %-21d | %-21d |",array.id,array.descripcion,arrayM->descripcion[marca],arrayT->descripcion[tipo]);
+	printf("| %-4d | %-21s | %-21s | %-21s |",array.id,array.descripcion,arrayM[marca].descripcion,arrayT[tipo].descripcion);
+	flag = 1;
+
+	return flag;
 }
 
 
 void listarNotebook(eNotebook array[], int tamN, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT){
+	int hayCargados = 0;
 	if(array != NULL && tamN >= 0 && arrayM != NULL && tamM > 0 && arrayT != 0 && tamT > 0){
 			if(tamN > 0){
-				printf("\n=============================================================================");
+				printf("\n=================================================================================");
 				printf("\n| \tLISTA NOTEBOOKS                                                         |\n");
-				printf("-------------------------------------------------------------------------------\n");
+				printf("---------------------------------------------------------------------------------\n");
+				printf("|  ID   |  DESCRIPCION          |      MARCA            |  TIPO                 |\n");
+				printf("---------------------------------------------------------------------------------\n");
+
 				for(int i = 0;i < tamN; i++){
-						if(array->isEmpty == OCUPADO){
-						listarUnaNotebook(array[i], arrayM, tamM, arrayT, tamT);
-						printf("\n");
-						}
+					if(array[i].isEmpty == OCUPADO){
+					hayCargados = listarUnaNotebook(array[i], arrayM, tamM, arrayT, tamT);
+					printf("\n");
 					}
-					printf("=============================================================================\n");
-					}
-					else{
-						printf("\n No hay Notebooks a listar\n\n");
 				}
+				if(!hayCargados){
+					printf("No hay Notebook cargadas pasra mostrar\n");
+				}
+					printf("=================================================================================\n");
+
 
 		}
 
 
 
 }
+
+void bajaNotebook(eNotebook array[], int tamN, eMarca arrayM[], int tamM, eTipo arrayT[], int tamT){
+	if(array != NULL && tamN >= 0 && arrayM != NULL && tamM > 0 && arrayT != 0 && tamT > 0){
+		int auxId;
+		int flag = 0;
+		int i;
+
+		printf("\nBAJA NOTEBOOK\n");
+		listarNotebook(array, tamN, arrayM, tamM, arrayT, tamT);
+		printf("\nIngrese el ID de la Notebook a dar de baja: ");
+		fflush(stdin);
+		while(!scanf("%d",&auxId)){
+
+			printf("\n** ERROR: reingrese el ID de la Notebook a dar de baja: ");
+			fflush(stdin);
+			scanf("%d",&auxId);
+		}
+		for( i = 0; i < tamN; i++){
+			if(array[i].id == auxId){
+				array[i].isEmpty = LIBRE;
+				flag = 1;
+				break;
+
+					}
+		}
+		if(flag){
+			printf("\nSe dio de baja el ID %d de la Notebook %s\n",array[i].id,array[i].descripcion);
+			system("pause");
+		}
+		else{
+			printf("\nEl ID %d no existe. \n",auxId);
+			system("pause");
+		}
+	}
+
+}
+
 

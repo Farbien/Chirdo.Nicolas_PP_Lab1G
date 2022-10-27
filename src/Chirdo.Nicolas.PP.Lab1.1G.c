@@ -44,21 +44,24 @@ int main(void) {
 		opcion = mostrarMenu();
 		switch(opcion){
 			case 'A':
-				printf("\nALTA\n");
 				altaNotebook(listaNotebook, TAM_NOTE, listaMarcas, TAM_MARCA, listasTipos, TAM_TIPO);
 			break;
 			case 'B':
 			break;
 			case 'C':
+				bajaNotebook(listaNotebook, TAM_NOTE, listaMarcas, TAM_MARCA, listasTipos, TAM_TIPO);
 			break;
 			case 'D':
 				listarNotebook(listaNotebook, TAM_NOTE, listaMarcas, TAM_MARCA, listasTipos, TAM_TIPO);
+				system("pause");
 			break;
 			case 'E':
 				listarMarcas(listaMarcas, TAM_MARCA);
+				system("pause");
 			break;
 			case 'F':
 				listarTipos(listasTipos, TAM_TIPO);
+				system("pause");
 			break;
 			case 'H':
 			break;
