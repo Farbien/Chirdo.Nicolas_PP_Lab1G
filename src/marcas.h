@@ -11,10 +11,12 @@
  typedef struct{
 	 int id;
 	 char descripcion[21];
+	 int estado;
  }eMarca;
 
 #endif /* MARCAS_H_ */
 
-int harcodearMarca(eMarca array[]);
+int inicializaMarcas(eMarca array[], int tam);
+int hardcodearMarca(eMarca array[]);
 void listarUnaMarca(eMarca marca);
 void listarMarcas(eMarca lista[], int tam);

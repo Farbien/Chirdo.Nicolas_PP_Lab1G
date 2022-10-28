@@ -8,7 +8,18 @@
 #ifndef FUNCIONES_H_
 #define FUNCIONES_H_
 
-char mostrarMenu(void);
+
+ typedef struct{
+		 int dia;
+		 int mes;
+		 int anio;
+ }eFecha;
 
 
 #endif /* FUNCIONES_H_ */
+
+char mostrarMenu(void);
+int mostrarMenuInformes(void);
+
+
+

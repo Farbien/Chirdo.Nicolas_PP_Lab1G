@@ -2,22 +2,39 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "estructuras.h"
 #include "marcas.h"
 #include "funciones.h"
 #include "input.h"
+#include "notebook.h"
+
+#define LIBRE 0
+#define OCUPADO 1
 
 // MARCAS
 
+int inicializaMarcas(eMarca array[], int tam) {
+	int rtn = -1;
 
-int harcodearMarca(eMarca array[]){
+	if (array != NULL) {
+		if (tam >= 0) {
+			for (int i = 0; i < tam; i++) {
+				array[i].estado = LIBRE;
+			}
+			rtn = 0;
+		}
+	}
+	return rtn;
+}
+
+int hardcodearMarca(eMarca array[]){
 	int todoOk = 0;
-	eMarca marca[4] = {{1000,"Compaq"},{1001,"Asus"},{1002,"Acer"},{1003,"HP"}};
+	eMarca marca[4] = {{1000,"Compaq",OCUPADO},{1001,"Asus",OCUPADO},{1002,"Acer",OCUPADO},{1003,"HP",OCUPADO}};
 
 	if(array != NULL){
 		for(int i=0; i<4; i++){
 			array[i].id = marca[i].id;
 			strcpy(array[i].descripcion,marca[i].descripcion);
+			array[i].estado = marca[i].estado;
 		}
 		todoOk = 1;
 		}
@@ -36,8 +53,10 @@ void listarMarcas(eMarca lista[], int tam){
 		printf("\n| \tLISTA MARCAS         |\n");
 		printf("------------------------------\n");
 		for(int i = 0;i < tam; i++){
-			listarUnaMarca(lista[i]);
-			printf("\n");
+			if(lista[i].estado == OCUPADO){
+				listarUnaMarca(lista[i]);
+				printf("\n");
+			}
 		}
 		printf("==============================\n");
 		}

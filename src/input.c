@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "estructuras.h"
 #include "input.h"
+#include "notebook.h"
 
 
 float validarFloat(float precio, char error[], int min){
